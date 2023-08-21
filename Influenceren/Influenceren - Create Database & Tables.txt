@@ -1,0 +1,30 @@
+use master
+
+create database Influenceren;
+
+use Influenceren
+
+create table Influencers (
+	influencerID int primary key,
+	name varchar(255) not null,
+	age float not null,
+	instagramFollowers bigint not null);
+
+create table SocialMediaPlatforms (
+	platformID int primary key,
+	name varchar(255) not null,
+	averageUserAge float not null,
+	totalUsers bigint not null);
+
+create table Brands (
+	brandID int primary key,
+	name varchar(255) not null,
+	category varchar(255) not null);
+
+create table Collaborations (
+	collaborationID int primary key,
+	influencerID int foreign key references Influencers(influencerID),
+	brandID int foreign key references Brands(brandID),
+	platformID int foreign key references SocialMediaPlatforms(platformID),
+	duration int not null,
+	payment float not null);

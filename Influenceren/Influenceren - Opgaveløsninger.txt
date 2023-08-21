@@ -1,0 +1,275 @@
+Opgave 1: Find alle influencers' navne.
+
+select name from influencers;
+
+Opgave 2: Find alle sociale medieplatforme.
+
+select name from SocialMediaPlatforms;
+
+Opgave 3: Find alle influencers over 25 år.
+
+select name from Influencers
+where age >= 25;
+
+Opgave 4: Find alle brands inden for kategorien "beauty".
+
+select name from brands
+where category = 'beauty';
+
+Opgave 5: Hvor mange influencers har over 50000 Instagram-følgere?
+
+(korrekte svar er 5)
+
+select count(name)
+from influencers
+where instagramFollowers >= 50000
+
+Opgave 6: Hvilken social medieplatform har den laveste gennemsnitlige brugeralder?
+
+select name
+from SocialMediaPlatforms
+where averageUserAge = (select min(averageUserAge) from SocialMediaPlatforms);
+
+Opgave 7: Find navnene på alle influencers, der har samarbejdet med brandet "FashionCo".
+
+select influencers.name from Collaborations
+join influencers on collaborations.influencerID = influencers.influencerID
+join Brands on Collaborations.brandID = brands.brandID
+where brands.name = 'FashionCo';
+
+Opgave 8: Hvilke sociale medieplatforme har over 1 million brugere?
+
+select name from SocialMediaPlatforms
+where totalUsers >= 1000000
+
+Opgave 9: Hvilke influencers har en alder mellem 25 og 30 år?
+
+select name from influencers
+where age >= 25 and age <= 30
+
+Opgave 10: Hvilke mærker har ikke haft samarbejde på platformen "Snapchat"?
+
+SELECT brands.name FROM Brands 
+WHERE Brands.brandID 
+	NOT IN 
+	(SELECT Collaborations.brandID 
+	FROM Collaborations 
+	WHERE Collaborations.platformID = 
+	(SELECT platformID 
+	FROM SocialMediaPlatforms 
+	WHERE SocialMediaPlatforms.name = 'Snapchat'));
+
+Opgave 11: Hvilke brands har haft det længste samarbejde?
+
+select Brands.name from collaborations
+join brands on collaborations.brandID = Brands.brandID
+where duration = (select max(duration) from collaborations);
+
+Opgave 12: Hvor mange samarbejder har hver influencer haft?
+
+select influencers.name, count(collaborations.collaborationID)
+from Collaborations
+join influencers on collaborations.influencerID = Influencers.influencerID
+group by influencers.name;
+
+Opgave 13: Hvilke brands har haft samarbejde med influencers med over 40000 Instagram-følgere?
+
+select distinct brands.name from Collaborations
+join brands on collaborations.brandID = brands.brandID
+join influencers on collaborations.influencerID = influencers.influencerID
+where influencers.instagramFollowers >= 40000
+
+Opgave 14: Find den gennemsnitlige alder for influencers på hver sociale medieplatform.
+
+select SocialMediaPlatforms.name, avg(influencers.age)
+from collaborations
+join influencers on collaborations.influencerID = Influencers.influencerID
+join SocialMediaPlatforms on collaborations.platformID = SocialMediaPlatforms.platformID
+group by SocialMediaPlatforms.name;
+
+Opgave 15: Find influencers, der har samarbejdet med mere end ét brand.
+
+select SocialMediaPlatforms.name, SocialMediaPlatforms.averageUserAge
+from SocialMediaPlatforms;
+
+Opgave 16: Hvilke sociale medieplatforme har ikke haft samarbejde med brandet "TechTron"?
+
+Så vidt jeg kan se, er TikTok den eneste platform som har haft
+et samarbejde med TechTron, ifølge 'Collaborations'-tabellen.
+Går altså ud fra, endnu engang, at facitlisten IKKE er korrekt.
+
+select s.name 
+from SocialMediaPlatforms s
+where s.platformID
+	not in
+	(select collaborations.platformID
+	from collaborations
+	where collaborations.brandID = 
+	(select brandID from brands
+	where brands.name = 'TechTron'));
+
+Opgave 17: Find den samlede betaling, som hver influencer har modtaget.
+
+select distinct influencers.name, sum(collaborations.payment)
+from collaborations
+join influencers on Collaborations.influencerID = Influencers.influencerID
+group by influencers.name;
+
+Opgave 18: Find alle influencers, der har haft samarbejde på både "Instagram" og "TikTok".
+
+HJÆLP :((((((((((((((((((((((((((((
+select distinct influencers.name
+from Collaborations
+join influencers on collaborations.influencerID = influencers.influencerID
+join brands on collaborations.brandID = brands.brandID
+where brands.name = 'Instagram' and brands.name = 'TikTok';
+
+HVORFOR IKKE: 
+
+SELECT i.name
+FROM Influencers i
+WHERE 
+(
+    SELECT COUNT(DISTINCT s.name)
+    FROM Collaborations c
+    JOIN SocialMediaPlatforms s ON c.platformID = s.platformID
+    WHERE c.influencerID = i.influencerID 
+    AND s.name IN ('Instagram', 'TikTok')
+) = 2;
+???????????????????????????????????????????????????????????????????????????????????????????????
+:(((((((((((((((((((((((((((((((((((
+
+Opgave 19: Find den sociale medieplatform, hvor der er blevet betalt mest i samarbejder.
+
+select top 1 s.name, sum(c.payment)
+from collaborations c
+join SocialMediaPlatforms s on c.platformID = s.platformID
+group by s.name
+order by sum(c.payment) desc
+
+Opgave 20: Find influencers, der har haft samarbejde med brands i både "fashion" og "beauty" kategorier.
+
+SELECT DISTINCT i.name
+FROM Influencers i
+WHERE EXISTS (
+    SELECT 1 
+    FROM Collaborations c
+    JOIN Brands b ON c.brandID = b.brandID
+    WHERE c.influencerID = i.influencerID AND b.category = 'fashion'
+) AND EXISTS (
+    SELECT 1 
+    FROM Collaborations c
+    JOIN Brands b ON c.brandID = b.brandID
+    WHERE c.influencerID = i.influencerID AND b.category = 'beauty'
+);
+
+ -----------------------------------------------------------------------------------------------------------------------------
+
+SELECT i.name
+FROM Influencers i
+JOIN Collaborations c1 ON i.influencerID = c1.influencerID
+JOIN Brands b1 ON c1.brandID = b1.brandID AND b1.category = 'fashion'
+JOIN Collaborations c2 ON i.influencerID = c2.influencerID
+JOIN Brands b2 ON c2.brandID = b2.brandID AND b2.category = 'beauty'
+GROUP BY i.name;
+
+----------------------------------------------------------------------------------------------------------------------------- 
+
+SELECT i.name
+FROM Influencers i
+WHERE 
+(
+    SELECT COUNT(DISTINCT b.category)
+    FROM Collaborations c
+    JOIN Brands b ON c.brandID = b.brandID
+    WHERE c.influencerID = i.influencerID 
+    AND b.category IN ('fashion', 'beauty')
+) = 2;
+
+Opgave 21: Find det gennemsnitlige betalte beløb til influencers under 25 år.
+
+select avg(c.payment)
+from collaborations c
+join influencers i on c.influencerID = i.influencerID
+where i.age < 25;
+
+Opgave 22: Find de top 3 influencers med flest samarbejder.
+
+Stemmer igen ikke overens med opgaven. Det er endda indikeret tidligere i opgaven, at det højeste
+antal af samarbejder for nogen influencer er 2.
+
+select top 3 i.name, count(c.collaborationID) as Collaborations
+from collaborations c
+join influencers i on c.influencerID = i.influencerID
+group by i.name
+order by count(c.collaborationID) desc
+
+Opgave 23: Hvilke brands har ikke haft et samarbejde på en platform med gennemsnitsalderen under 25?
+
+Men hvordan finder jeg frem til det, med et enkelt statement?
+Følg med i morgen.
+
+select distinct c.brandID, b.name, c.platformID, s.name, s.averageUserAge from Collaborations c
+join SocialMediaPlatforms s on c.platformID = s.platformID
+join Brands b on c.brandID = b.brandID
+where averageUserAge !< 25
+order by s.name
+
+-- 1, Instagram, 24
+-- 2, TikTok, 18
+-- 4, Snapchat, 20
+
+-- 1 FashionCo
+-- 2 BeautyBliss
+-- 3 TechTron
+-- 4 GlamGlow
+-- 5 SportSpot
+-- 6 EcoEssentials * HAR INGEN UNDER 25
+-- 7 TrendTech
+-- 8 MystiqueMakeup * HAR INGEN UNDER 25
+
+Opgave 24: Find influencers, hvis samlede betaling er over gennemsnittet for alle influencers.
+
+
+
+Opgave 25: Find alle sociale medieplatforme, hvor det gennemsnitlige samarbejdsbeløb er over 5000.
+
+
+
+Opgave 26: Find influencers, der har haft samarbejder på alle tilgængelige sociale medieplatforme.
+
+
+
+Opgave 27: Find den platform, som har den yngste gennemsnitlige influencer.
+
+
+
+Opgave 28: Hvor mange brands har hver influencer haft samarbejde med på Instagram?
+
+
+
+Opgave 29:
+Find samarbejder, der varer længere end gennemsnittet og betaler under gennemsnittet.
+
+
+
+Opgave 30: Hvilken brand har haft det dyreste gennemsnitlige samarbejde?
+
+
+
+Opgave 31: Find influencers, som kun har samarbejdet med brands fra kategorien "fashion".
+
+
+
+
+Opgave 32: Hvilken influencer har haft samarbejde med flest forskellige brands på TikTok?
+
+
+
+Opgave 33: Find den totale betaling, hver influencer har modtaget pr. platform.
+
+
+
+Opgave 34: Find brands, der har haft samarbejder, som varer over 6 måneder og betaler over 5000.
+
+
