@@ -1,0 +1,8 @@
+C:\Users\zbcrabg\source\repos\Performance\Performance\bin\Debug\Performance.exe.config
+C:\Users\zbcrabg\source\repos\Performance\Performance\bin\Debug\Performance.exe
+C:\Users\zbcrabg\source\repos\Performance\Performance\bin\Debug\Performance.pdb
+C:\Users\zbcrabg\source\repos\Performance\Performance\obj\Debug\Performance.csproj.AssemblyReference.cache
+C:\Users\zbcrabg\source\repos\Performance\Performance\obj\Debug\Performance.csproj.SuggestedBindingRedirects.cache
+C:\Users\zbcrabg\source\repos\Performance\Performance\obj\Debug\Performance.csproj.CoreCompileInputs.cache
+C:\Users\zbcrabg\source\repos\Performance\Performance\obj\Debug\Performance.exe
+C:\Users\zbcrabg\source\repos\Performance\Performance\obj\Debug\Performance.pdb
