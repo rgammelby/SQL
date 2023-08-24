@@ -14,3 +14,11 @@ C:\Users\rabga\Github\SQL\INDEX\Performance\Performance\obj\Debug\Performance.cs
 C:\Users\rabga\Github\SQL\INDEX\Performance\Performance\obj\Debug\Performance.csproj.CoreCompileInputs.cache
 C:\Users\rabga\Github\SQL\INDEX\Performance\Performance\obj\Debug\Performance.exe
 C:\Users\rabga\Github\SQL\INDEX\Performance\Performance\obj\Debug\Performance.pdb
+C:\Users\rabga\Github\SQL\SQL Server Import - Index\Performance\Performance\bin\Debug\Performance.exe.config
+C:\Users\rabga\Github\SQL\SQL Server Import - Index\Performance\Performance\bin\Debug\Performance.exe
+C:\Users\rabga\Github\SQL\SQL Server Import - Index\Performance\Performance\bin\Debug\Performance.pdb
+C:\Users\rabga\Github\SQL\SQL Server Import - Index\Performance\Performance\obj\Debug\Performance.csproj.AssemblyReference.cache
+C:\Users\rabga\Github\SQL\SQL Server Import - Index\Performance\Performance\obj\Debug\Performance.csproj.SuggestedBindingRedirects.cache
+C:\Users\rabga\Github\SQL\SQL Server Import - Index\Performance\Performance\obj\Debug\Performance.csproj.CoreCompileInputs.cache
+C:\Users\rabga\Github\SQL\SQL Server Import - Index\Performance\Performance\obj\Debug\Performance.exe
+C:\Users\rabga\Github\SQL\SQL Server Import - Index\Performance\Performance\obj\Debug\Performance.pdb

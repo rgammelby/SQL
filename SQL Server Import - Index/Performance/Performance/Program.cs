@@ -16,7 +16,6 @@ namespace Performance
         static void Main(string[] args)
         {
             Menu();
-            Console.ReadLine();
         }
 
         #region View
@@ -105,6 +104,10 @@ namespace Performance
             Console.Write(bottomLeft); Console.Write(string.Concat(Enumerable.Repeat(horiz, 20))); Console.Write(bottomRight + "\n");
         }
 
+        #endregion
+
+        #region Controller
+
         // runs stored procedure for highest/lowest occurrence number
         static void SelectOccurrence(SqlConnection s, int selection)
         {
@@ -132,14 +135,10 @@ namespace Performance
             var oNum = dt.Rows[0].ItemArray[1].ToString();
 
             Console.WriteLine($"Number: {num} \n" +
-                $"Number of occurrences: {oNum} ");
-
-            Console.ReadLine();
+                $"Number of occurrences: {oNum} \n\n" +
+                "Press any key to continue. ");
+            Console.ReadKey(true);
         }
-
-        #endregion
-
-        #region Controller
 
         // creates views for instance table in order to track incidence
         static void CreateViews(SqlConnection s)
@@ -186,8 +185,8 @@ namespace Performance
 
             Console.SetCursorPosition(1, 16);
 
-            Console.WriteLine("Instances created. ");
-            Console.ReadLine();
+            Console.WriteLine("Instances created. Press any key to continue. ");
+            Console.ReadKey(true);
             Console.CursorVisible = true;
         }
 
